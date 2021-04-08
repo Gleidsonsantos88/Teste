@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1", "1", "{6C5EE687-E9F0-48A5-A8C7-3E18907C25DB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2", "2", "{769D22D2-2D81-4F39-B49E-871C0D32410A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3", "3", "{0A8DC315-31C0-496D-9A9A-86AB1CF30231}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProdapWeb", "ProdapWeb\ProdapWeb.csproj", "{20AC9F33-A6DC-49AF-A80E-CA368AA34EFE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20AC9F33-A6DC-49AF-A80E-CA368AA34EFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20AC9F33-A6DC-49AF-A80E-CA368AA34EFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20AC9F33-A6DC-49AF-A80E-CA368AA34EFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20AC9F33-A6DC-49AF-A80E-CA368AA34EFE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{20AC9F33-A6DC-49AF-A80E-CA368AA34EFE} = {6C5EE687-E9F0-48A5-A8C7-3E18907C25DB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9F98B8FB-AAB1-4A08-BE47-8291CF383084}
+	EndGlobalSection
+EndGlobal
