@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Repository;
 using Repository.EfCore;
 using Service.Adapters;
 using Service.Request;
 using Service.TarefaService;
+using Service.UsuarioService;
 using Service.Validator;
 using System;
 using System.Collections.Generic;
@@ -34,12 +36,16 @@ namespace ProdapWeb
 
 
             services.AddTransient<ITarefaRepository, TarefaRepository>();
+            services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+            
             services.AddTransient<ITarefaService, TarefaService>();
+            services.AddTransient<IUsuarioService, UsuarioService>();
             services.AddTransient<ITarefaAdapter, TarefaAdapter>();
+            services.AddTransient<IUsuarioAdapter, UsuarioAdapter>();
 
             services.AddTransient<IValidator<CriarTarefaRequest>, CriarTarefaRequestValidator>();
             services.AddTransient<IValidator<AlterarTarefaRequest>, AlterarTarefaRequestValidator>();
-            
+            services.AddTransient<IValidator<CriarUsuarioRequest>, CriarUsuarioRequestValidator>();
 
         }
 

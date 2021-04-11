@@ -2,8 +2,8 @@
 {
     public interface ICommand<T>
     {
-        void Criar(T obj);
-        void Alterar(T obj);
-        void Excluir(T obj);
+        bool Criar(T obj);
+        bool Alterar(T obj);
+        bool Excluir(int id);
     }
 }

@@ -10,5 +10,7 @@ namespace Service.TarefaService
         Tarefa BuscarPorId(int id);
         IEnumerable<Tarefa> BuscarPorUsuarioId(int usuarioId);
         bool Alterar(AlterarTarefaRequest obj);
+        Tarefa BuscarPorTarefaIdEUsuarioId(int id, int usuarioId);
+        bool Excluir(int id);
     }
 }

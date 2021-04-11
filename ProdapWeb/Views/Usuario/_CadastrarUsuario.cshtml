@@ -1,0 +1,14 @@
+﻿@model  Service.Request.CriarUsuarioRequest
+
+<div class="container" style="width: 380px;">
+
+    <form class="form-signin" asp-controller="Usuario" asp-action="Cadastrar" method="post">
+        <h2 class="form-signin-heading">Cadastrar</h2>
+        <label for="inputUsuario" class="sr-only">Usuário</label>
+        <input name="Nome" type="text" id="inputUsuario" class="form-control" placeholder="Informe o usuário" required="" autofocus="">
+        <label for="inputsenha" class="sr-only">Senha</label>
+        <input name="Senha" type="password" id="inputSenha" class="form-control" placeholder="Informe a senha" required="">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Criar</button>
+        <button onclick="atualizaPartialEntarComUsuarioExistente()" class="btn btn-lg btn-success btn-block" type="submit">Entrar com usuário existente</button>
+        </form>
+</div>

@@ -32,7 +32,7 @@ namespace ProdapTest
         [Fact]
         public void Criar_Tarefa_Sucesso()
         {
-
+            //Arrange
             var criarTarefaRequest = new CriarTarefaRequest()
             {
                 Descricao = "Criação de tarefa com sucesso.",
@@ -41,9 +41,12 @@ namespace ProdapTest
 
             var tarefa = _tarefaAdapter.ConverteCriarTarefaRequestParaTarefa(criarTarefaRequest);
 
-            _tarefaRepositoryMock.Setup(repository => repository.Criar(tarefa)).Verifiable();
+            _tarefaRepositoryMock.Setup(repository => repository.Criar(tarefa)).Returns(true);
+           
+            //Act
             var response = _tarefaService.Criar(criarTarefaRequest);
-
+            
+            //Assert
             Assert.True(response);
         }
 
@@ -64,6 +67,7 @@ namespace ProdapTest
             Assert.True(exception.Errors.ToArray()[1].ErrorMessage == mensagemCodigoUsuario);
         }
 
+       
         [Fact]
         public void Criar_Tarefa_Sem_Descricao()
         {
@@ -143,7 +147,7 @@ namespace ProdapTest
 
                 new Tarefa
                 {
-                     DataCriacao = DateTime.Now,
+                     DataCriacao = DateTime.Now.AddDays(1),
                      Descricao = "Tarefa 01",
                      Id = 1,
                      Situacao = SituacaoEnum.Afazer,
@@ -153,7 +157,7 @@ namespace ProdapTest
                 {
                      DataCriacao = DateTime.Now,
                      Descricao = "Tarefa 02",
-                     Id = 1,
+                     Id = 2,
                      Situacao = SituacaoEnum.Afazer,
                      UsuarioId = 1
                 }              
@@ -183,7 +187,7 @@ namespace ProdapTest
 
             var tarefa = _tarefaAdapter.ConverteAlterarTarefaRequestParaTarefa(alterarTarefaRequest);
 
-            _tarefaRepositoryMock.Setup(repository => repository.Criar(tarefa)).Verifiable();
+            _tarefaRepositoryMock.Setup(repository => repository.Criar(tarefa)).Returns(true);
             var response = _tarefaService.Alterar(alterarTarefaRequest);
 
             Assert.True(response);
@@ -207,6 +211,69 @@ namespace ProdapTest
             Assert.True(exception.Errors.ToArray()[0].ErrorMessage == mensagemDescricao);
             Assert.True(exception.Errors.ToArray()[1].ErrorMessage == mensagemCodigoUsuario);
             Assert.True(exception.Errors.ToArray()[2].ErrorMessage == mensagemSituacao);
+        }
+
+        [Fact]
+        public void Buscar_Por_Tarefa_Id_E_Usuario_Id()
+        {
+            //Arrange
+            var tarefa = new Tarefa
+            {
+                DataCriacao = DateTime.Now,
+                Descricao = "Tarefa por id e usuário id",
+                Id = 1,
+                Situacao = SituacaoEnum.Afazer,
+                UsuarioId = 1
+            };
+
+            _tarefaRepositoryMock.Setup(repository => repository.BuscarPorTarefaIdEUsuarioId(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(tarefa);
+
+            //Act
+            var response = _tarefaService.BuscarPorTarefaIdEUsuarioId(1 ,1);
+
+            //Assert
+            Assert.Equal(response, tarefa);
+            Assert.True(response.Id == 1);
+        }
+
+        [Fact]
+        public void Buscar_Por_Tarefa_Id_E_Usuario_Id_Nao_Encontrado()
+        {
+            //Arrange
+            Tarefa tarefa = null;
+
+            _tarefaRepositoryMock.Setup(repository => repository.BuscarPorTarefaIdEUsuarioId(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(tarefa);
+
+            //Act
+            var response = _tarefaService.BuscarPorTarefaIdEUsuarioId(1, 1);
+
+            //Assert
+            Assert.Equal(response, tarefa);
+        }
+
+        [Fact]
+        public void Excluir_Tarefa_Sucesso()
+        {
+            _tarefaRepositoryMock.Setup(repository => repository.Excluir(It.IsAny<int>())).Returns(true);
+            var response = _tarefaService.Excluir(It.IsAny<int>());
+
+            Assert.True(response);
+        }
+
+        [Fact]
+        public void Excluir_Tarefa_Erro()
+        {
+            //Arrange
+            _tarefaRepositoryMock.Setup(repository => repository.Excluir(It.IsAny<int>())).Returns(false);
+
+            //Act
+            Action act = () => _tarefaService.Excluir(It.IsAny<int>());
+            Exception exception = Assert.Throws<Exception>(act);
+
+            //Assert
+            Assert.True(exception.Message == "Erro ao tentar exluir tarefa");
         }
 
     }

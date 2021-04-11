@@ -34,20 +34,23 @@ namespace Service.TarefaService
 
                 _tarefaRepository.Alterar(_tarefaAdapter.ConverteAlterarTarefaRequestParaTarefa(tarefa));
                 return true;
+              
             }
             catch (ValidationException exv)
             {
                 throw new ValidationException(exv.Errors);
             }
-            catch (Exception)
-            {
-                throw new Exception("Erro ao tentar alterar tarefa");
-            }
+           
         }
 
         public Tarefa BuscarPorId(int id)
         {
             return _tarefaRepository.BuscarPorId(id);
+        }
+
+        public Tarefa BuscarPorTarefaIdEUsuarioId(int id, int usuarioId)
+        {
+            return _tarefaRepository.BuscarPorTarefaIdEUsuarioId(id, usuarioId);
         }
 
         public IEnumerable<Tarefa> BuscarPorUsuarioId(int usuarioId)
@@ -60,7 +63,6 @@ namespace Service.TarefaService
             try
             {
                 _criarTarefaRequestValidator.ValidateAndThrow(tarefa);
-               
                 _tarefaRepository.Criar(_tarefaAdapter.ConverteCriarTarefaRequestParaTarefa(tarefa));
                 return true;
             }
@@ -68,9 +70,22 @@ namespace Service.TarefaService
             {
                 throw new ValidationException(exv.Errors);
             }
-            catch (Exception)
+           
+        }
+
+        public bool Excluir(int id)
+        {
+            try
             {
-                throw new Exception("Erro ao tentar criar tarefa");
+
+                if (_tarefaRepository.Excluir(id))
+                    return true;
+                else
+                    throw new Exception("Erro ao tentar exluir tarefa");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }

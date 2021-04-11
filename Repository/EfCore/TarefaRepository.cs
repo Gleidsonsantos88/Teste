@@ -12,48 +12,95 @@ namespace Repository.EfCore
             _prodapDbContext = prodapDbContext;
         }
 
-        public void Alterar(Tarefa obj)
+        public bool Alterar(Tarefa obj)
         {
-            var tarefa = BuscarPorId(obj.Id);
-            if(tarefa != null)
-            {
-                tarefa.Descricao = obj.Descricao;
-                tarefa.Situacao = obj.Situacao;
-            }
+            var tarefa = BuscarPorTarefaIdEUsuarioId(obj.Id, obj.UsuarioId);
+            if (tarefa == null)
+                return false;
+
+            tarefa.Descricao = obj.Descricao;
+            tarefa.Situacao = obj.Situacao;
             _prodapDbContext.SaveChanges();
+            return true;
         }
 
         public Tarefa BuscarPorId(int id)
         {
-            return _prodapDbContext.Tarefas.Where(x => x.Id == id)?.FirstOrDefault();
+            return _prodapDbContext.Tarefas.Where(x => x.Id == id)?
+                                           .Select(s =>
+                                            new Tarefa
+                                            {
+                                                Descricao = s.Descricao,
+                                                Id = s.Id,
+                                                Situacao = s.Situacao,
+                                                UsuarioId = s.UsuarioId,
+                                                DataCriacao = s.DataCriacao
+                                            }
+                                            ).FirstOrDefault();
         }
 
         public Tarefa BuscarPorTarefaIdEUsuarioId(int id, int usuarioId)
         {
-            return _prodapDbContext.Tarefas.Where(x => x.UsuarioId == usuarioId && x.UsuarioId == usuarioId)?.FirstOrDefault();
+            return _prodapDbContext.Tarefas.Where(x => x.UsuarioId == usuarioId &&
+                                                  x.UsuarioId == usuarioId)?.Select(s =>
+                                                                            new Tarefa
+                                                                            {
+                                                                                Descricao = s.Descricao,
+                                                                                Id = s.Id,
+                                                                                Situacao = s.Situacao,
+                                                                                UsuarioId = s.UsuarioId,
+                                                                                DataCriacao = s.DataCriacao
+                                                                            }
+                                                                            ).FirstOrDefault();
         }
 
         public IEnumerable<Tarefa> BuscarPorUsuarioId(int usuarioId)
         {
-            return _prodapDbContext.Tarefas.Where(x => x.UsuarioId == usuarioId).ToList();
+            return _prodapDbContext.Tarefas.Where(x => x.UsuarioId == usuarioId)?.Select(s =>
+                                                                            new Tarefa
+                                                                            {
+                                                                                Descricao = s.Descricao,
+                                                                                Id = s.Id,
+                                                                                Situacao = s.Situacao,
+                                                                                UsuarioId = s.UsuarioId,
+                                                                                DataCriacao = s.DataCriacao
+                                                                            }
+                                                                            ).ToList().OrderBy(x => x.DataCriacao);
         }
 
         public IEnumerable<Tarefa> BuscarTodos()
         {
-            return _prodapDbContext.Tarefas.ToList();
+            return _prodapDbContext.Tarefas?.Select(s =>
+                                            new Tarefa
+                                            {
+                                                Descricao = s.Descricao,
+                                                Id = s.Id,
+                                                Situacao = s.Situacao,
+                                                UsuarioId = s.UsuarioId,
+                                                DataCriacao = s.DataCriacao
+                                            }
+                                            ).ToList().OrderBy(x => x.DataCriacao);
         }
 
-        public void Criar(Tarefa obj)
+        public bool Criar(Tarefa obj)
         {
+           
             _prodapDbContext.Tarefas.Add(obj);
             _prodapDbContext.SaveChanges();
+            return true;
+           
         }
 
-        public void Excluir(Tarefa obj)
+        public bool Excluir(int id)
         {
-            var tarefa = BuscarPorId(obj.Id);
-            _prodapDbContext.Tarefas.Remove(tarefa);
-            _prodapDbContext.SaveChanges();
+            var tarefa = BuscarPorId(id);
+            if (tarefa != null)
+            {
+                _prodapDbContext.Tarefas.Remove(tarefa);
+                _prodapDbContext.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }
