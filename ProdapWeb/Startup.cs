@@ -1,8 +1,14 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Repository.EfCore;
+using Service.Adapters;
+using Service.Request;
+using Service.TarefaService;
+using Service.Validator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +29,18 @@ namespace ProdapWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<ProdapDbContext>();
+
+
+            services.AddTransient<ITarefaRepository, TarefaRepository>();
+            services.AddTransient<ITarefaService, TarefaService>();
+            services.AddTransient<ITarefaAdapter, TarefaAdapter>();
+
+            services.AddTransient<IValidator<CriarTarefaRequest>, CriarTarefaRequestValidator>();
+            services.AddTransient<IValidator<AlterarTarefaRequest>, AlterarTarefaRequestValidator>();
+            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

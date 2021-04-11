@@ -1,11 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ProdapWeb.Utils;
 
 namespace ProdapWeb
 {
@@ -13,6 +8,7 @@ namespace ProdapWeb
     {
         public static void Main(string[] args)
         {
+            DataBaseGenerator.CreateDataBase();
             CreateHostBuilder(args).Build().Run();
         }
 
