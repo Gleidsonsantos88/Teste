@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Model;
 using Moq;
 using Repository;
@@ -19,17 +20,22 @@ namespace ProdapTest
         private readonly UsuarioService _usuarioService;
         private readonly CriarUsuarioRequestValidator _criarUsuarioRequestValidator;
         private readonly UsuarioAdapter _usuarioAdapter;
+        private readonly Mock<IHttpContextAccessor> _httpContextAccessor;
 
         public UsuarioServiceTest()
         {
             _usuarioRepositoryMock = new Mock<IUsuarioRepository>();
             _criarUsuarioRequestValidator = new CriarUsuarioRequestValidator();
             _usuarioAdapter = new UsuarioAdapter();
+            _httpContextAccessor = new Mock<IHttpContextAccessor>();
+
+
             _usuarioService = new UsuarioService(
                 _usuarioRepositoryMock.Object,
                 _usuarioAdapter,
-                _criarUsuarioRequestValidator
-             );
+                _criarUsuarioRequestValidator,
+               _httpContextAccessor.Object
+             ); 
         }
 
         [Fact]

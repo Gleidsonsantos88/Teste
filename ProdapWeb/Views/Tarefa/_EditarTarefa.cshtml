@@ -1,0 +1,109 @@
+﻿@model List<Service.Response.TarefaResponse>
+
+<div class="row no-gutters">
+
+    <div class="col-lg-4 pl-lg-2 mb-3">
+        <div class="card h-lg-100">
+            <div class="card-header">
+                <div class="row flex-between-center">
+                    <div class="col-auto">
+                        <h6 class="mb-0">Editar tarefa</h6>
+                    </div>
+                    <div class="col-auto d-flex">
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-body h-100 pr-0">
+                <div class="echart-line-total-sales h-100" data-echart-responsive="true"></div>
+                @foreach (var tarefa in Model.Where(x=>x.Situacao == Service.Enum.SituacaoEnum.Editando)?.ToList()?.OrderByDescending(x=>x.Id))
+                {
+                    <div class="card mb-2 rounded-3 shadow-sm" style="margin-right: 20px;">
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <h1 class="card-title pricing-card-title">@tarefa.Id<small class="text-muted fw-light"></small></h1>
+                                <label for="exampleFormControlTextarea1">Descrição</label>
+                                <textarea class="form-control" id="DescricaoTarefa" rows="3">@tarefa.Descricao</textarea>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-danger">Cancelar</button>
+                            <button type="button" class="btn btn-sm btn-success">Salvar</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 pl-lg-2 mb-3">
+        <div class="card h-lg-100">
+            <div class="card-header">
+                <div class="row flex-between-center">
+                    <div class="col-auto">
+                        <h6 class="mb-0">Á Fazer</h6>
+                    </div>
+                    <div class="col-auto d-flex">
+                    </div>
+                </div>
+            </div>
+            <div class="card-body h-100 pr-0">
+
+                @foreach (var tarefa in Model.Where(x => x.Situacao == Service.Enum.SituacaoEnum.Editando)?.ToList().OrderByDescending(x => x.Id))
+                {
+                    <div class="card mb-2 rounded-3 shadow-sm" style="margin-right: 20px;">
+
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title">@tarefa.Id<small class="text-muted fw-light">/Editando tarefa...</small></h1>
+                            <label>@tarefa.Descricao</label>
+                        </div>
+                    </div>
+                }
+
+                @foreach (var tarefa in Model.Where(x => x.Situacao == Service.Enum.SituacaoEnum.Afazer)?.ToList().OrderByDescending(x => x.Id))
+                {
+                       <div class="card mb-2 rounded-3 shadow-sm" style="margin-right: 20px;">
+
+                           <div class="card-body">
+                               <h1 class="card-title pricing-card-title">@tarefa.Id</h1>
+                               <label>@tarefa.Descricao</label>
+                               <br />
+                               <button type="button" class="btn btn-sm btn-success">Concluir</button>
+                               <button type="button" class="btn btn-sm btn-danger">Remover</button>
+                           </div>
+                       </div>
+                           
+                 }
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 pl-lg-2 mb-3">
+        <div class="card h-lg-100">
+            <div class="card-header">
+                <div class="row flex-between-center">
+                    <div class="col-auto">
+                        <h6 class="mb-0">Feitas</h6>
+                    </div>
+                    <div class="col-auto d-flex">
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-body h-100 pr-0">
+                <div class="echart-line-total-sales h-100" data-echart-responsive="true"></div>
+                @foreach (var tarefa in Model.Where(x => x.Situacao == Service.Enum.SituacaoEnum.Feitos)?.ToList().OrderByDescending(x => x.Id))
+                {
+                    <div class="card mb-2 rounded-3 shadow-sm" style="margin-right: 20px;">
+
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title">@tarefa.Id</h1>
+                            <label>@tarefa.Descricao</label> 
+                            <br />
+                            <button type="button" class="btn btn-sm btn-danger">Remover</button>
+                        </div>
+                    </div>
+                        
+                 }
+            </div>
+        </div>
+    </div>
+
+</div>

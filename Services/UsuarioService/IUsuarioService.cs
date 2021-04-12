@@ -7,5 +7,9 @@ namespace Service.UsuarioService
     {
         bool Criar(CriarUsuarioRequest usuario);
         Usuario BuscarUsuarioPorNomeSenha(string nome, string senha);
+
+        public void ColocaUsuarioSessao(Usuario usuario);
+
+        public Usuario BuscarUsuarioSessao();
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Service.Request;
+using Service.Response;
+using System.Collections.Generic;
 
 namespace Service.Adapters
 {
@@ -6,6 +8,6 @@ namespace Service.Adapters
     {
         Model.Tarefa ConverteCriarTarefaRequestParaTarefa(CriarTarefaRequest criarTarefaRequest);
         Model.Tarefa ConverteAlterarTarefaRequestParaTarefa(AlterarTarefaRequest AlterarTarefaRequest);
-        
+        List<TarefaResponse> ConverteTarefaParaTarefaResponse(List<Model.Tarefa> tarefas);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Model;
 using Service.Request;
+using Service.Response;
 using System;
+using System.Collections.Generic;
 
 namespace Service.Adapters
 {
@@ -25,6 +27,23 @@ namespace Service.Adapters
                 DataCriacao = DateTime.Now,
                 Situacao = SituacaoEnum.Afazer
             };
+        }
+
+        public List<TarefaResponse> ConverteTarefaParaTarefaResponse(List<Tarefa> tarefas)
+        {
+            var tarefaResponse = new List<TarefaResponse>();
+
+            foreach (var tarefa in tarefas)
+            {
+                tarefaResponse.Add(new TarefaResponse() { 
+                  DataCriacao = tarefa.DataCriacao,
+                  Descricao = tarefa.Descricao,
+                  Id = tarefa.Id,
+                  Situacao = (Enum.SituacaoEnum) tarefa.Situacao,
+                  UsuarioId = tarefa.UsuarioId
+                });
+            }
+            return tarefaResponse;
         }
     }
 }

@@ -1,13 +1,16 @@
-﻿<div class="container" style="width: 380px;">
+﻿@model Service.Request.CriarUsuarioRequest
 
-        <form class="form-signin">
-            <h2 class="form-signin-heading">Entrar</h2>
-            <label for="inputUsuario" class="sr-only">Usuário</label>
-            <input type="text" id="inputUsuario" class="form-control" placeholder="Informe o usuário" required="" autofocus="">
-            <label for="inputsenha" class="sr-only">Senha</label>
-            <input type="password" id="inputSenha" class="form-control" placeholder="Informe a senha" required="">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
-            <button onclick="atualizaPartialCadastrarUsuario()" class="btn btn-lg btn-success btn-block" type="submit">Criar um novo usuário</button>
-        </form>
+<div class="container" style="width: 380px;">
 
+    <form class="form-signin" asp-controller="Usuario" asp-action="Entrar" method="post">
+        <h2 class="form-signin-heading">Entrar</h2>
+        <label for="inputUsuario" class="sr-only">Usuário</label>
+        <input name="Nome" type="text" id="inputUsuario" class="form-control" placeholder="Informe o usuário" required="" autofocus="">
+        <label for="inputsenha" class="sr-only">Senha</label>
+        <input name="Senha" type="password" id="inputSenha" class="form-control" placeholder="Informe a senha" required="">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+        <button onclick="atualizaPartialCadastrarUsuario()" class="btn btn-lg btn-success btn-block" type="submit">Criar um novo usuário</button>
+    </form>
+    <br />
+    <label class="text-danger">@TempData["Mensagem"]</label>
 </div>

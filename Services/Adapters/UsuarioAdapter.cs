@@ -10,6 +10,7 @@ namespace Service.Adapters
         {
             return new Usuario
             {
+                Id = criarUsuarioRequest.Id,
                 Nome = criarUsuarioRequest.Nome,
                 Senha = criarUsuarioRequest.Senha
             };

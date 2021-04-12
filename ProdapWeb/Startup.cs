@@ -31,6 +31,9 @@ namespace ProdapWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            services.AddHttpContextAccessor();
 
             services.AddDbContext<ProdapDbContext>();
 
@@ -61,7 +64,7 @@ namespace ProdapWeb
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();
