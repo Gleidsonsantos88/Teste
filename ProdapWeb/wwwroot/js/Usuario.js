@@ -1,6 +1,6 @@
 ﻿
 $(document).ready(function () {
-    atualizaPartialCadastrarUsuario();
+    atualizaPartialEntarComUsuarioExistente();
 });
 
 function atualizaPartialCadastrarUsuario() {
