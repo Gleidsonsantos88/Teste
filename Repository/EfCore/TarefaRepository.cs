@@ -18,8 +18,10 @@ namespace Repository.EfCore
             if (tarefa == null)
                 return false;
 
-            tarefa.Descricao = obj.Descricao;
-            tarefa.Situacao = obj.Situacao;
+            tarefa.Descricao = !string.IsNullOrEmpty(obj.Descricao) ? obj.Descricao : tarefa.Descricao;
+            tarefa.Situacao  = obj.Situacao;
+
+            _prodapDbContext.Update(tarefa);
             _prodapDbContext.SaveChanges();
             return true;
         }
@@ -41,7 +43,7 @@ namespace Repository.EfCore
 
         public Tarefa BuscarPorTarefaIdEUsuarioId(int id, int usuarioId)
         {
-            return _prodapDbContext.Tarefas.Where(x => x.UsuarioId == usuarioId &&
+            return _prodapDbContext.Tarefas.Where(x => x.Id == id &&
                                                   x.UsuarioId == usuarioId)?.Select(s =>
                                                                             new Tarefa
                                                                             {

@@ -12,6 +12,7 @@ namespace Service.Adapters
         {
             return new Tarefa
             {
+                Id = alterarTarefaRequest.Id,
                 Descricao = alterarTarefaRequest.Descricao,
                 UsuarioId = alterarTarefaRequest.UsuarioId,
                 Situacao = (SituacaoEnum) alterarTarefaRequest.Situacao

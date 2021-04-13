@@ -1,4 +1,10 @@
-﻿<div class="row no-gutters">
+﻿@model List<Service.Response.TarefaResponse>
+<label class="text-success">@TempData["MensagemSucesso"]</label>
+<label class="text-danger">@TempData["MensagemErro"]</label>
+<label class="text-danger" id="mensagemDeErro"></label>
+
+
+<div class="row no-gutters">
 
     <div class="col-lg-4 pl-lg-2 mb-3">
         <div class="card h-lg-100">
@@ -14,18 +20,18 @@
             </div>
             <div class="card-body h-100 pr-0">
                 <div class="echart-line-total-sales h-100" data-echart-responsive="true"></div>
-                <!--Remover-->
+                
                 <div class="card mb-2 rounded-3 shadow-sm" style="margin-right: 20px;">
 
-                    <div class="card-body">
+                    <div class="card-body" style="word-break: break-all;">
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Descrição</label>
                             <textarea class="form-control" id="DescricaoTarefa" rows="3"></textarea>
                         </div>
-                        <button type="button" class="w-100 btn btn-sm btn-primary">Adicionar tafera</button>
+                        <button type="button" class="w-100 btn btn-sm btn-primary" onclick="CriarTarefa()">Adicionar tafera</button>
                     </div>
                 </div>
-                <!---->
+            
             </div>
         </div>
     </div>
@@ -42,21 +48,21 @@
             </div>
             <div class="card-body h-100 pr-0">
 
-                <div class="card mb-2 rounded-3 shadow-sm" style="margin-right: 20px;">
+                @foreach (var tarefa in Model.Where(x => x.Situacao == Service.Enum.SituacaoEnum.Afazer)?.ToList().OrderByDescending(x => x.Id))
+                {
+                    <div class="card mb-2 rounded-3 shadow-sm" style="margin-right: 20px;">
 
-                    <div class="card-body">
-                        <h1 class="card-title pricing-card-title">$0<small class="text-muted fw-light">/mo</small></h1>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>10 users included</li>
-                            <li>2 GB of storage</li>
-                            <li>Email support</li>
-                            <li>Help center access</li>
-                        </ul>
-                        <button type="button" class="btn btn-sm btn-primary">Editar</button>
-                        <button type="button" class="btn btn-sm btn-success">Concluir</button>
-                        <button type="button" class="btn btn-sm btn-danger">Remover</button>
+                        <div class="card-body" style="word-break: break-all;">
+                            
+                            <h1 class="card-title pricing-card-title">@tarefa.Id</h1>
+                            <label id="label_@tarefa.Id">@tarefa.Descricao</label>
+                            <br />
+                            <button type="button" class="btn btn-sm btn-primary" onclick="ColocarTarefaEmEdicao(@tarefa.Id, @tarefa.UsuarioId)">Editar</button>
+                            <button type="button" class="btn btn-sm btn-success" onclick="ConcluirTarefaAFazer(@tarefa.Id, @tarefa.UsuarioId)">Concluir</button>
+                            <button type="button" class="btn btn-sm btn-danger" onclick="RemoverTarefa(@tarefa.Id)">Remover</button>
+                        </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
     </div>
@@ -74,23 +80,21 @@
             </div>
             <div class="card-body h-100 pr-0">
                 <div class="echart-line-total-sales h-100" data-echart-responsive="true"></div>
-                <!--Remover-->
-                <div class="card mb-2 rounded-3 shadow-sm" style="margin-right: 20px;">
+                @foreach (var tarefa in Model.Where(x => x.Situacao == Service.Enum.SituacaoEnum.Feitos)?.ToList().OrderByDescending(x => x.Id))
+                {
+                    <div class="card mb-2 rounded-3 shadow-sm" style="margin-right: 20px;">
 
-                    <div class="card-body">
-                        <h1 class="card-title pricing-card-title">$0<small class="text-muted fw-light">/mo</small></h1>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>10 users included</li>
-                            <li>2 GB of storage</li>
-                            <li>Email support</li>
-                            <li>Help center access</li>
-                        </ul>
-                        <button type="button" class="btn btn-sm btn-danger">Remover</button>
+                        <div class="card-body" style="word-break: break-all;">
+                            <h1 class="card-title pricing-card-title">@tarefa.Id</h1>
+                            <label>@tarefa.Descricao</label>
+                            <br />
+                            <button type="button" class="btn btn-sm btn-danger" onclick="RemoverTarefa(@tarefa.Id)">Remover</button>
+                        </div>
                     </div>
-                </div>
-                <!---->
+                }
             </div>
         </div>
     </div>
+
 
 </div>
